@@ -3,7 +3,7 @@
   "version": "2.1.43",
   "private": true,
   "dependencies": {
-    "@failean/mainserver-provider": "^2.6.79",
+    "@failean/mainserver-provider": "^2.6.80",
     "@failean/shared-types": "^2.9.116",
     "@mui/icons-material": "^5.11.16",
     "@testing-library/jest-dom": "^5.16.5",
