@@ -17,7 +17,7 @@ const App = () => {
       }
     };
     check();
-  }, []);
+  }, [axiosInstance]);
 
   return (
     <Grid container direction="column">
