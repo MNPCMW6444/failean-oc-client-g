@@ -5,19 +5,22 @@ import { MainserverContext } from "@failean/mainserver-provider";
 const App = () => {
   const [status, setStatus] = useState("pending");
 
-  const { axiosInstance } = useContext(MainserverContext);
+  const mainServer = useContext(MainserverContext);
 
   useEffect(() => {
     const check = async () => {
-      try {
-        const { data } = await axiosInstance.get("/areyoualive");
-        setStatus(data.answer === "yes" ? "working" : "not working");
-      } catch (e) {
-        setStatus("not working");
+      if(mainServer) {
+        const { axiosInstance } = mainServer;
+        try {
+          const { data } = await axiosInstance.get("/areyoualive");
+          setStatus(data.answer === "yes" ? "working" : "not working");
+        } catch (e) {
+          setStatus("not working");
+        }
       }
     };
     check();
-  }, [axiosInstance]);
+  }, [mainServer]);
 
   return (
     <Grid container direction="column">
@@ -34,7 +37,7 @@ const App = () => {
               ? "yellow"
               : "red"
           }
-          height="500px"
+          height="100px"
           width="500px"
         >
           Server status is {status}
