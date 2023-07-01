@@ -5,7 +5,8 @@ import { MainserverContext } from "@failean/mainserver-provider";
 const App = () => {
   const [status, setStatus] = useState("pending");
 
-  const { axiosInstance } = useContext(MainserverContext);
+  const mainserverContext = useContext(MainserverContext);
+  const axiosInstance = mainserverContext?.axiosInstance;
 
   useEffect(() => {
     const check = async () => {
