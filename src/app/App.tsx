@@ -10,13 +10,15 @@ const App = () => {
 
   useEffect(() => {
     const check = async () => {
-      try {
-        const { data } = await axiosInstance.get("/areyoualive");
-        setStatus(data.answer === "yes" ? "working" : "not working");
-      } catch (e) {
-        setStatus("not working");
-      }
+      if (axiosInstance)
+        try {
+          const { data } = await axiosInstance.get("/areyoualive");
+          setStatus(data.answer === "yes" ? "working" : "not working");
+        } catch (e) {
+          setStatus("not working");
+        }
     };
+
     check();
   }, [axiosInstance]);
 
