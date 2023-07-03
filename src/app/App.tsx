@@ -3,12 +3,20 @@ import { Grid, Typography, Box } from "@mui/material";
 import { MainserverContext } from "@failean/mainserver-provider";
 import axios from "axios";
 import TokenAnalytics from "../TokenAnalytics";
+import DailyAnalytics from "../DailyAnalytics"; // This is a new component we've created
 import { TokenData } from "../TokenAnalytics";
 
 function App() {
   const [status, setStatus] = useState("pending");
-  const [tokenData, setTokenData] = useState<TokenData[]>([]); // New state for tokenData
+  const [tokenData, setTokenData] = useState<TokenData[]>([]);
   const mainServer = useContext(MainserverContext);
+
+  // Add a new state for daily analytics
+  const [dailyAnalytics, setDailyAnalytics] = useState({
+    recentUsers: [],
+    totalPaidTokens: 0,
+    totalUsedTokens: 0,
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,6 +31,22 @@ function App() {
     };
 
     fetchData();
+  }, []);
+
+  // Add a new effect to fetch daily analytics
+  useEffect(() => {
+    const fetchDailyAnalytics = async () => {
+      try {
+        const { data } = await axios.get(
+          "http://localhost:6777/api/daily-analytics" // Update the URL with your oc-server endpoint
+        );
+        setDailyAnalytics(data);
+      } catch (error) {
+        console.error("Error fetching daily analytics data:", error);
+      }
+    };
+
+    fetchDailyAnalytics();
   }, []);
 
   useEffect(() => {
@@ -63,7 +87,12 @@ function App() {
       </Grid>
 
       <Grid item>
-        <TokenAnalytics tokenData={tokenData} /> {/* Pass tokenData to TokenAnalytics */}
+        <TokenAnalytics tokenData={tokenData} />
+      </Grid>
+
+      {/* New DailyAnalytics component */}
+      <Grid item>
+        <DailyAnalytics data={dailyAnalytics} />
       </Grid>
     </Grid>
   );
