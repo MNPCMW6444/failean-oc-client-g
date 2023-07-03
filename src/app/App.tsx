@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Grid, Typography, Box } from "@mui/material";
 import { MainserverContext } from "@failean/mainserver-provider";
-import axios from "axios";
 import TokenAnalytics from "../TokenAnalytics";
 import DailyAnalytics from "../DailyAnalytics"; // This is a new component we've created
 import { TokenData } from "../TokenAnalytics";
@@ -20,14 +19,17 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
+      if(mainServer) {
+        const { axiosInstance } = mainServer;
       try {
-        const { data } = await axios.get(
+        const { data } = await axiosInstance.get(
           "http://localhost:6777/api/token-analytics" // Update the URL with your oc-server endpoint
         );
         setTokenData(data);
       } catch (error) {
         console.error("Error fetching token analytics data:", error);
       }
+    }
     };
 
     fetchData();
@@ -36,14 +38,17 @@ function App() {
   // Add a new effect to fetch daily analytics
   useEffect(() => {
     const fetchDailyAnalytics = async () => {
+      if(mainServer){
+        const { axiosInstance } = mainServer;
       try {
-        const { data } = await axios.get(
+        const { data } = await axiosInstance.get(
           "http://localhost:6777/api/daily-analytics" // Update the URL with your oc-server endpoint
         );
         setDailyAnalytics(data);
       } catch (error) {
         console.error("Error fetching daily analytics data:", error);
       }
+    }
     };
 
     fetchDailyAnalytics();
@@ -79,8 +84,8 @@ function App() {
               ? "yellow"
               : "red"
           }
-          height="100px"
-          width="500px"
+          height="10%"
+          width="50%"
         >
           Server status is {status}
         </Box>
@@ -90,7 +95,7 @@ function App() {
         <TokenAnalytics tokenData={tokenData} />
       </Grid>
 
-      {/* New DailyAnalytics component */}
+      
       <Grid item>
         <DailyAnalytics data={dailyAnalytics} />
       </Grid>

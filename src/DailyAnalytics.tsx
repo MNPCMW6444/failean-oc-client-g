@@ -1,25 +1,26 @@
-import React from 'react';
+import { FC } from 'react';
+import{ Typography, List, ListItem } from '@mui/material';
 
 interface DailyAnalyticsProps {
   data: {
-    recentUsers: Array<{ name: string }>; // Replace with your user type
+    recentUsers: Array<{ name: string }>; 
     totalPaidTokens: number;
     totalUsedTokens: number;
   };
 }
 
-const DailyAnalytics: React.FC<DailyAnalyticsProps> = ({ data }) => {
+const DailyAnalytics: FC<DailyAnalyticsProps> = ({ data }) => {
   return (
     <div>
-      <h2>Daily Analytics</h2>
-      <p>Recent Users:</p>
-      <ul>
+      <Typography variant="h2">Daily Analytics</Typography>
+      <Typography variant="body1">Recent Users:</Typography>
+      <List>
         {data.recentUsers.map((user, index) => (
-          <li key={index}>{user.name}</li> // Display user name, adjust according to your user type
+          <ListItem key={index}>{user.name}</ListItem> // Display user name, adjust according to your user type
         ))}
-      </ul>
-      <p>Total Tokens Paid to OpenAI: {data.totalPaidTokens}</p>
-      <p>Total Tokens Used: {data.totalUsedTokens}</p>
+      </List>
+      <Typography variant="body1">Total Tokens Paid to OpenAI: {data.totalPaidTokens}</Typography>
+      <Typography variant="body1">Total Tokens Used: {data.totalUsedTokens}</Typography>
     </div>
   );
 };

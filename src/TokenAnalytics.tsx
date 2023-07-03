@@ -1,4 +1,5 @@
-import React from 'react';
+import { FC } from 'react';
+import{ Typography } from '@mui/material';
 
 export interface TokenData {
   userId: string;
@@ -12,7 +13,7 @@ interface TokenAnalyticsProps {
 
 
 
-const TokenAnalytics: React.FC<TokenAnalyticsProps> = ({ tokenData }) => {
+const TokenAnalytics: FC<TokenAnalyticsProps> = ({ tokenData }) => {
   // Calculate total consumed tokens
   const totalTokensConsumed = tokenData.reduce((total, data) => total + data.consumedTokens, 0);
 
@@ -27,11 +28,11 @@ const TokenAnalytics: React.FC<TokenAnalyticsProps> = ({ tokenData }) => {
 
   return (
     <div>
-      <h2>Token Consumption Analytics</h2>
-      <p>Total Tokens Consumed: {totalTokensConsumed}</p>
-      <p>Average Tokens per User: {averageTokensPerUser}</p>
-      <p>Highest Token Consumption: {maxTokenConsumption}</p>
-      <p>Lowest Token Consumption: {minTokenConsumption}</p>
+      <Typography variant="h2">Token Consumption Analytics</Typography>
+      <Typography variant="body1">Total Tokens Consumed: {totalTokensConsumed}</Typography>
+      <Typography variant="body1">Average Tokens per User: {averageTokensPerUser}</Typography>
+      <Typography variant="body1">Highest Token Consumption: {maxTokenConsumption}</Typography>
+      <Typography variant="body1">Lowest Token Consumption: {minTokenConsumption}</Typography>
       {/* Render additional charts or visualizations here */}
     </div>
   );
