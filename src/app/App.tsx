@@ -1,58 +1,58 @@
 import { useState, useEffect, useContext } from "react";
-import { Grid, Typography, Box } from "@mui/material";
+import { Grid, Typography, Box, Button, TextField, Card, CardContent, List, ListItem } from "@mui/material";
 import { MainserverContext } from "@failean/mainserver-provider";
-import TokenAnalytics from "../TokenAnalytics";
-import DailyAnalytics from "../DailyAnalytics"; // This is a new component we've created
-import { TokenData } from "../TokenAnalytics";
+import InvalidPromptEvents from "../InvalidPromptEvents";
 
-function App() {
-  const [status, setStatus] = useState("pending");
-  const [tokenData, setTokenData] = useState<TokenData[]>([]);
-  const mainServer = useContext(MainserverContext);
 
-  // Add a new state for daily analytics
-  const [dailyAnalytics, setDailyAnalytics] = useState({
-    recentUsers: [],
-    totalPaidTokens: 0,
-    totalUsedTokens: 0,
-  });
+type Login = {
+  name: string;
+};
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if(mainServer) {
-        const { axiosInstance } = mainServer;
-      try {
-        const { data } = await axiosInstance.get(
-          "http://localhost:6777/api/token-analytics" // Update the URL with your oc-server endpoint
-        );
-        setTokenData(data);
-      } catch (error) {
-        console.error("Error fetching token analytics data:", error);
-      }
-    }
-    };
+const App = () => {
+  // Add states for the new functionalities
+  const [lastDayLogins, setLastDayLogins] = useState<Login[]>([]);
+  const [invalidPromptEvents, setInvalidPromptEvents] = useState([]);
+  const [avgPrice, setAvgPrice] = useState(0);
+  const [promptName, setPromptName] = useState('examplePrompt');
 
-    fetchData();
-  }, []);
+  const mainServer = useContext(MainserverContext); // Define mainServer here
+  const [status, setStatus] = useState("pending"); // Define status and setStatus here
 
-  // Add a new effect to fetch daily analytics
-  useEffect(() => {
-    const fetchDailyAnalytics = async () => {
+  // Add effects to fetch the data from the backend
+  useEffect (() => {
+    const fetchLastDayLogins = async () => {
       if(mainServer){
         const { axiosInstance } = mainServer;
-      try {
-        const { data } = await axiosInstance.get(
-          "http://localhost:6777/api/daily-analytics" // Update the URL with your oc-server endpoint
-        );
-        setDailyAnalytics(data);
-      } catch (error) {
-        console.error("Error fetching daily analytics data:", error);
+        try{
+          const { data } = await axiosInstance.get("/LastDayLogins");
+          setLastDayLogins(data);
+        } catch (error) {
+          console.error("Error fetching last day logins data:", error);
+        }
       }
-    }
     };
 
-    fetchDailyAnalytics();
-  }, []);
+    fetchLastDayLogins();
+  }, [mainServer]);
+
+useEffect(() => {
+  const fetchInvalidPromptEvents = async () => {
+    if(mainServer) {
+      const { axiosInstance } = mainServer;
+      try{
+        const { data } = await axiosInstance.get("/InvalidPromptEvents");
+        setInvalidPromptEvents(data.events);
+      } catch (error) {
+        console.error("Error fetching invalid prompt events data:", error);
+      }
+    }
+  };
+
+  fetchInvalidPromptEvents();
+}, [mainServer]);
+
+
+
 
   useEffect(() => {
     const checkServerStatus = async () => {
@@ -69,35 +69,90 @@ function App() {
     checkServerStatus();
   }, [mainServer]);
 
+  const fetchAvgPriceForPrompt = async () => {
+    if(mainServer){
+      const { axiosInstance } = mainServer;
+      try{
+        const { data } = await axiosInstance.post("/AvgPriceForPrompt", { promptName });
+        setAvgPrice(data.avg);
+      } catch (error) {
+        console.error("Error fetching average price data:", error);
+      }
+    }
+  };
+  
+
   return (
-    <Grid container direction="column">
+    <Grid container direction="column" spacing={3}>
       <Grid item>
-        <Typography>Hello</Typography>
+        <Typography variant="h4">Welcome to OC Client Dashboard!</Typography>
       </Grid>
 
       <Grid item>
-        <Box
-          bgcolor={
-            status === "working"
-              ? "green"
-              : status === "pending"
-              ? "yellow"
-              : "red"
-          }
-          height="10%"
-          width="50%"
-        >
-          Server status is {status}
-        </Box>
+        <Card>
+          <CardContent>
+            <Typography variant="h6">Server Status Is:</Typography>
+            <Box
+              bgcolor={
+                status === "working"
+                  ? "green"
+                  : status === "pending"
+                  ? "yellow"
+                  : "red"
+              }
+              height="8rem"
+              width="30%"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              borderRadius="20px"
+              color="black"
+            >
+              {status.toUpperCase()}
+            </Box>
+          </CardContent>
+        </Card>
       </Grid>
 
       <Grid item>
-        <TokenAnalytics tokenData={tokenData} />
+        <InvalidPromptEvents events={invalidPromptEvents} />
       </Grid>
 
-      
       <Grid item>
-        <DailyAnalytics data={dailyAnalytics} />
+        <Card>
+          <CardContent>
+            <Typography variant="h6">Users who Logged in Last Day</Typography>
+            <List>
+              {lastDayLogins.map((user, index) => (
+                <ListItem key={index}>{user.name}</ListItem>
+              ))}
+            </List>
+          </CardContent>
+        </Card>
+      </Grid>
+
+      <Grid item>
+        <Card>
+          <CardContent>
+            <Typography variant="h6">Fetch Average Price</Typography>
+            <TextField 
+              label="Prompt Name" 
+              variant="outlined" 
+              value={promptName} 
+              onChange={(e) => setPromptName(e.target.value)} 
+            />
+            <Button variant="contained" color="primary" onClick={() => {
+              if (promptName) {
+                fetchAvgPriceForPrompt();
+              } else {
+                alert("Please enter a prompt name!");
+              }
+            }}>
+              Get Average Price
+            </Button>
+            <Typography variant="subtitle1">Average Price: {avgPrice}</Typography>
+          </CardContent>
+        </Card>
       </Grid>
     </Grid>
   );
