@@ -1,12 +1,12 @@
 {
   "name": "failean-oc-client",
-  "version": "1.1.48",
+  "version": "1.1.50",
   "private": true,
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@failean/mainserver-provider": "^2.6.105",
-    "@failean/shared-types": "^2.9.143",
-    "@mui/icons-material": "^5.11.16",
+    "@failean/shared-types": "^2.9.152",
+    "@mui/icons-material": "^5.13.7",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",

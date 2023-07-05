@@ -27,7 +27,6 @@ const App = () => {
       <Grid item>
         <Typography>Hello</Typography>
       </Grid>
-
       <Grid item>
         <Box
           bgcolor={
