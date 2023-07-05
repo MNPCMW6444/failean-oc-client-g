@@ -2,16 +2,13 @@ import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import App from "./app/components/App";
-import { MainserverProvider } from "@failean/mainserver-provider";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <StrictMode>
-    <MainserverProvider env="dev">
-      <App />
-    </MainserverProvider>
+    <App />
   </StrictMode>
 );
 
