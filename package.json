@@ -3,6 +3,7 @@
   "version": "2.1.43",
   "private": true,
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@failean/mainserver-provider": "^2.6.80",
     "@failean/shared-types": "^2.9.116",
     "@mui/icons-material": "^5.11.16",

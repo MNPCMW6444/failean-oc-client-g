@@ -1,8 +1,17 @@
 import { useState, useEffect, useContext } from "react";
-import { Grid, Typography, Box, Button, TextField, Card, CardContent, List, ListItem } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  Box,
+  Button,
+  TextField,
+  Card,
+  CardContent,
+  List,
+  ListItem,
+} from "@mui/material";
 import { MainserverContext } from "@failean/mainserver-provider";
 import InvalidPromptEvents from "../InvalidPromptEvents";
-
 
 type Login = {
   name: string;
@@ -13,17 +22,17 @@ const App = () => {
   const [lastDayLogins, setLastDayLogins] = useState<Login[]>([]);
   const [invalidPromptEvents, setInvalidPromptEvents] = useState([]);
   const [avgPrice, setAvgPrice] = useState(0);
-  const [promptName, setPromptName] = useState('examplePrompt');
+  const [promptName, setPromptName] = useState("examplePrompt");
 
   const mainServer = useContext(MainserverContext); // Define mainServer here
   const [status, setStatus] = useState("pending"); // Define status and setStatus here
 
   // Add effects to fetch the data from the backend
-  useEffect (() => {
+  useEffect(() => {
     const fetchLastDayLogins = async () => {
-      if(mainServer){
+      if (mainServer) {
         const { axiosInstance } = mainServer;
-        try{
+        try {
           const { data } = await axiosInstance.get("/LastDayLogins");
           setLastDayLogins(data);
         } catch (error) {
@@ -35,30 +44,30 @@ const App = () => {
     fetchLastDayLogins();
   }, [mainServer]);
 
-useEffect(() => {
-  const fetchInvalidPromptEvents = async () => {
-    if(mainServer) {
-      const { axiosInstance } = mainServer;
-      try{
-        const { data } = await axiosInstance.get("/InvalidPromptEvents");
-        setInvalidPromptEvents(data.events);
-      } catch (error) {
-        console.error("Error fetching invalid prompt events data:", error);
-      }
-    }
-  };
-
-  fetchInvalidPromptEvents();
-}, [mainServer]);
-
-
-
-
   useEffect(() => {
-    const checkServerStatus = async () => {
+    const fetchInvalidPromptEvents = async () => {
       if (mainServer) {
         const { axiosInstance } = mainServer;
         try {
+          const { data } = await axiosInstance.get("/InvalidPromptEvents");
+          setInvalidPromptEvents(data.events);
+        } catch (error) {
+          console.error("Error fetching invalid prompt events data:", error);
+        }
+      }
+    };
+
+    fetchInvalidPromptEvents();
+  }, [mainServer]);
+
+  useEffect(() => {
+    const checkServerStatus = async () => {
+      debugger;
+
+      if (mainServer) {
+        const { axiosInstance } = mainServer;
+        try {
+          debugger;
           const { data } = await axiosInstance.get("/areyoualive");
           setStatus(data.answer === "yes" ? "working" : "not working");
         } catch (e) {
@@ -70,17 +79,18 @@ useEffect(() => {
   }, [mainServer]);
 
   const fetchAvgPriceForPrompt = async () => {
-    if(mainServer){
+    if (mainServer) {
       const { axiosInstance } = mainServer;
-      try{
-        const { data } = await axiosInstance.post("/AvgPriceForPrompt", { promptName });
+      try {
+        const { data } = await axiosInstance.post("/AvgPriceForPrompt", {
+          promptName,
+        });
         setAvgPrice(data.avg);
       } catch (error) {
         console.error("Error fetching average price data:", error);
       }
     }
   };
-  
 
   return (
     <Grid container direction="column" spacing={3}>
@@ -135,27 +145,33 @@ useEffect(() => {
         <Card>
           <CardContent>
             <Typography variant="h6">Fetch Average Price</Typography>
-            <TextField 
-              label="Prompt Name" 
-              variant="outlined" 
-              value={promptName} 
-              onChange={(e) => setPromptName(e.target.value)} 
+            <TextField
+              label="Prompt Name"
+              variant="outlined"
+              value={promptName}
+              onChange={(e) => setPromptName(e.target.value)}
             />
-            <Button variant="contained" color="primary" onClick={() => {
-              if (promptName) {
-                fetchAvgPriceForPrompt();
-              } else {
-                alert("Please enter a prompt name!");
-              }
-            }}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                if (promptName) {
+                  fetchAvgPriceForPrompt();
+                } else {
+                  alert("Please enter a prompt name!");
+                }
+              }}
+            >
               Get Average Price
             </Button>
-            <Typography variant="subtitle1">Average Price: {avgPrice}</Typography>
+            <Typography variant="subtitle1">
+              Average Price: {avgPrice}
+            </Typography>
           </CardContent>
         </Card>
       </Grid>
     </Grid>
   );
-}
+};
 
 export default App;
