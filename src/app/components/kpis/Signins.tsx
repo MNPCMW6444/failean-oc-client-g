@@ -1,21 +1,28 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState, useEffect, useContext } from "react";
+import { OcserverContext } from "../../context/OcserverContext";
 
 const Signins = () => {
   const [numberInLast24H, setNumberInLast24H] = useState(0);
-  const [details, setDetails] = useState();
+  //const [details, setDetails] = useState();
+
+  const ocserverContext = useContext(OcserverContext);
+  const axiosInstance = ocserverContext?.axiosInstance;
+  debugger;
 
   useEffect(() => {
     const fetchSignins = async () => {
-      const res = await axios(
-        "http://localhost:6777/read/usersWhoLoggedInLastDay"
-      );
-      const { total, details } = res.data;
-      debugger;
-      setNumberInLast24H(total);
+      try {
+        if (axiosInstance) {
+          const res = await axiosInstance("read/usersWhoLoggedInLastDay");
+          const { total /*  details  */ } = res.data;
+          setNumberInLast24H(total);
+        }
+      } catch (err) {
+        console.log(err);
+      }
     };
     fetchSignins();
-  }, []);
+  }, [axiosInstance]);
 
   return <div>{numberInLast24H}</div>;
 };

@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Grid, Typography, Box } from "@mui/material";
+import { Grid, Box } from "@mui/material";
 import { MainserverContext } from "@failean/mainserver-provider";
 
 const MainserverStatus = () => {

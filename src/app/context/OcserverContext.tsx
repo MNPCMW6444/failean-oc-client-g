@@ -1,4 +1,11 @@
-import { ReactNode, createContext, useEffect, useState, useRef } from "react";
+import {
+  ReactNode,
+  createContext,
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+} from "react";
 import { Typography } from "@mui/material";
 import axios, { AxiosInstance } from "axios";
 
@@ -8,11 +15,14 @@ interface OcserverProviderProps {
   env?: "tst" | "dev";
 }
 
+interface OcserverContextProps {
+  axiosInstance: AxiosInstance;
+  version: string;
+}
+
 const DEFAULT_TRY_INTERVAL = 3000;
 
-export const OcserverContext = createContext<OcserverProviderProps | null>(
-  null
-);
+export const OcserverContext = createContext<OcserverContextProps | null>(null);
 
 export const OcserverProvider = ({
   children,
@@ -27,15 +37,18 @@ export const OcserverProvider = ({
     interval / 1000
   } seconds.`;
 
-  const checkServerAvailability = async (axiosInstance: AxiosInstance) => {
-    try {
-      return (await axiosInstance.get("areyoualive")).data.answer === "yes"
-        ? GOOD_STATUS
-        : BAD_MESSAGE;
-    } catch (err) {
-      return BAD_MESSAGE;
-    }
-  };
+  const checkServerAvailability = useCallback(
+    async (axiosInstance: AxiosInstance) => {
+      try {
+        return (await axiosInstance.get("areyoualive")).data.answer === "yes"
+          ? GOOD_STATUS
+          : BAD_MESSAGE;
+      } catch (err) {
+        return BAD_MESSAGE;
+      }
+    },
+    [BAD_MESSAGE]
+  );
 
   const [status, setStatus] = useState<string>(IDLE);
   const [version, setVersion] = useState<string>();
@@ -90,15 +103,15 @@ export const OcserverProvider = ({
     if (statusRef.current === IDLE) {
       setStatusAsyncly();
     }
-  }, [axiosInstance, tryInterval]);
+  }, [axiosInstance, interval, checkServerAvailability]);
 
   if (status === GOOD_STATUS) {
     return (
-      <MainserverContext.Provider
+      <OcserverContext.Provider
         value={{ version: version || "", axiosInstance }}
       >
-        <ApolloProvider client={client}>{children}</ApolloProvider>
-      </MainserverContext.Provider>
+        {children}
+      </OcserverContext.Provider>
     );
   } else {
     return <Typography>{status}</Typography>;
