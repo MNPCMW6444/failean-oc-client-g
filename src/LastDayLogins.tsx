@@ -10,7 +10,7 @@ interface LastDayLoginsProps {
 const LastDayLogins: FC<LastDayLoginsProps> = ({ data }) => {
   return (
     <div>
-      <Typography variant="h2">Last Day Logins</Typography>
+      <Typography variant="h1">Last Day Logins</Typography>
       <Typography variant="body1">Users who logged in during the last day:</Typography>
       <List>
         {data.lastDayLogins.map((user, index) => (
