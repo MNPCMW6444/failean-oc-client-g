@@ -44,8 +44,8 @@ export const OcserverProvider = ({
 
   const baseURL =
     process.env.NODE_ENV === "development"
-      ? "http://localhost:6555/"
-      : `https://${env || ""}mainserver.failean.com/`;
+      ? "http://localhost:6777/"
+      : `https://${env || ""}ocserver.failean.com/`;
 
   const axiosInstance = axios.create({
     baseURL,
@@ -53,33 +53,6 @@ export const OcserverProvider = ({
     headers: {
       "Content-Type": "application/json",
     },
-  });
-
-  const httpLink = new HttpLink({
-    uri: baseURL + "graphql",
-  });
-
-  const wsLink = new WebSocketLink(
-    process.env.NODE_ENV === "development"
-      ? "ws://localhost:6555/graphql"
-      : `wss://${env || ""}mainserver.failean.com/graphql`
-  );
-
-  const link = split(
-    ({ query }) => {
-      const definition = getMainDefinition(query);
-      return (
-        definition.kind === "OperationDefinition" &&
-        definition.operation === "subscription"
-      );
-    },
-    wsLink,
-    httpLink
-  );
-
-  const client = new ApolloClient({
-    link,
-    cache: new InMemoryCache(),
   });
 
   useEffect(() => {
@@ -90,7 +63,7 @@ export const OcserverProvider = ({
     const setStatusAsyncly = async () => {
       try {
         setStatus(CHECKING_MESSAGE);
-        console.log("Checking server availability..."); // Log for starting server check
+        console.log("Checking oc server availability..."); // Log for starting server check
 
         const newStatus = await checkServerAvailability(axiosInstance);
         if (newStatus === "good") {
@@ -99,14 +72,17 @@ export const OcserverProvider = ({
         }
         setStatus(newStatus);
 
-        console.log(`Server check complete. Status: ${newStatus}`); // Log for completion of server check
+        console.log(`OC Server check complete. Status: ${newStatus}`); // Log for completion of server check
 
         if (newStatus !== GOOD_STATUS) {
           console.log("Setting up the next check..."); // Log for setting up next server check
           setTimeout(setStatusAsyncly, interval);
         }
       } catch (error) {
-        console.error("An error occurred while checking the server: ", error); // Log for any error during server check
+        console.error(
+          "An error occurred while checking the oc server: ",
+          error
+        ); // Log for any error during server check
         // After an error, we can setup the next server check too
         setTimeout(setStatusAsyncly, interval);
       }
