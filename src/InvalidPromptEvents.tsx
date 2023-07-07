@@ -8,7 +8,7 @@ interface InvalidPromptEventsProps {
 const InvalidPromptEvents: FC<InvalidPromptEventsProps> = ({ events }) => {
   return (
     <div>
-      <Typography variant="h4">Invalid Prompt Events</Typography>
+      <Typography variant="h2">Invalid Prompt Events</Typography>
       <Typography variant="body1">Events related to invalid prompts:</Typography>
       <List>
         {events.map((event, index) => (
