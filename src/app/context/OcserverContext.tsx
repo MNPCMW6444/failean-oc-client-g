@@ -66,6 +66,10 @@ export const OcserverProvider = ({
     headers: {
       "Content-Type": "application/json",
     },
+    auth: {
+      username: "client",
+      password: process.env.OCPASS + "",
+    },
   });
 
   useEffect(() => {
