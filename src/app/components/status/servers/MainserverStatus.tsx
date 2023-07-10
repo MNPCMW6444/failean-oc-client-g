@@ -22,7 +22,6 @@ const MainserverStatus = () => {
 
     check();
   }, [axiosInstance]);
-
   return (
     <Grid container direction="column">
       <Grid item>
@@ -36,6 +35,11 @@ const MainserverStatus = () => {
           }
           height="500px"
           width="500px"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          borderRadius="20px"
+          color="black"
         >
           Server status is {status}
         </Box>
