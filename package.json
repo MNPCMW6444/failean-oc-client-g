@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@failean/mainserver-provider": "^2.7.108",
+    "@failean/mainserver-provider": "^2.7.109",
     "@failean/shared-types": "^2.9.158",
     "@mui/icons-material": "^5.14.0",
     "@testing-library/jest-dom": "^5.16.5",
