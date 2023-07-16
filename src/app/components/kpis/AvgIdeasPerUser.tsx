@@ -2,31 +2,30 @@ import { useState, useEffect, useContext } from "react";
 import { OcserverContext } from "../../context/OcserverContext";
 import { Typography, Card, CardContent } from "@mui/material";
 
-
-const OpenAITokensWeUsed = () => {
-  const [tokensUsed, setTokensUsed] = useState<number | null>(null);
+const AvgIdeasPerUser = () => {
+  const [avgIdeas, setAvgIdeas] = useState<number | null>(null);
 
   const ocserverContext = useContext(OcserverContext);
   const axiosInstance = ocserverContext?.axiosInstance;
 
   useEffect(() => {
-    const fetchTokensUsed = async () => {
+    const fetchAvgIdeas = async () => {
       try {
         if (axiosInstance) {
-          const res = await axiosInstance.get("/numberOfOpenAITokensWeUsed");
-          const { sum } = res.data;
-          setTokensUsed(sum || null);
+          const res = await axiosInstance.get("/avgIdeasPerUser");
+          const { avg } = res.data;
+          setAvgIdeas(avg || null);
         }
       } catch (err) {
         console.log(err);
       }
     };
-    fetchTokensUsed();
+    fetchAvgIdeas();
   }, [axiosInstance]);
 
   return (
     <div>
-      <Typography variant="h6">Number of OpenAI Tokens Used: {tokensUsed || "N/A"}</Typography>
+      <Typography variant="h6">Average Ideas per User: {avgIdeas || "N/A"}</Typography>
       <Card>
         <CardContent>
           {/* Should be added lately in the UI work */}
@@ -36,4 +35,4 @@ const OpenAITokensWeUsed = () => {
   );
 };
 
-export default OpenAITokensWeUsed;
+export default AvgIdeasPerUser;
