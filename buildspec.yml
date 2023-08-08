@@ -21,4 +21,4 @@ phases:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image to Amazon ECR...
-      - docker push 988253048728.dkr.ecr.us-east-1.amazonaws.com/oc-client:$IMAGE_TAG
+      - docker push 988253048728.dkr.ecr.us-east-1.amazonaws.com/occlient:$IMAGE_TAG
