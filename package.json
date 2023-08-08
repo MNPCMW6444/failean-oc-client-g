@@ -2,6 +2,7 @@
   "name": "failean-oc-client",
   "version": "1.1.52",
   "private": true,
+  "proxy": "http://localhost:5998",
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@failean/mainserver-provider": "^2.7.118",
@@ -34,7 +35,7 @@
     "dev:fullclean": "npm run clean:all && npm run dev:fullfast",
     "dev:fullfast": "npm run update && npm run dev:fast",
     "server": "node server.js",
-    "dev:fast": "concurrently \"npm run server\" \"PORT=5998 react-scripts start\"",
+    "dev:fast": "concurrently \"npm run server\" \"PORT=5997 react-scripts start\"",
     "dev": "npm run dev:fast",
     "udev": "npm run dev:fullfast",
     "eject": "react-scripts eject",
