@@ -6,7 +6,7 @@
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@failean/mainserver-provider": "^2.7.118",
-    "@failean/oc-server-provider": "^1.7.120",
+    "@failean/oc-server-provider": "^1.7.121",
     "@failean/shared-types": "^2.9.159",
     "@mui/icons-material": "^5.14.3",
     "@testing-library/jest-dom": "^5.17.0",
