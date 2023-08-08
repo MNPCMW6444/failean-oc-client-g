@@ -29,7 +29,7 @@ const AvgPriceForPrompt = () => {
       <Typography variant="h6">Average Price for Prompt: {avgPrice || "N/A"}</Typography>
       <Card>
         <CardContent>
-          {/* Additional content for the card */}
+          {/* Should be added lately in the UI work */}
         </CardContent>
       </Card>
     </div>

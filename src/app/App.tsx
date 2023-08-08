@@ -3,6 +3,7 @@ import Servers from "./components/status/Server";
 import InvalidPromptEvents from "./components/kpis/InvalidPromptEvents";
 import AvgPriceForPrompt from "./components/kpis/AvgPriceForPrompt";
 import OpenAITokensWeUsed from "./components/kpis/OpenAITokensWeUsed";
+import AvgIdeasPerUser from "./components/kpis/AvgIdeasPerUser";
 
 const App = () => {
   return (
@@ -12,7 +13,8 @@ const App = () => {
     <InvalidPromptEvents  />
     <AvgPriceForPrompt />
     <OpenAITokensWeUsed />
-    
+    <AvgIdeasPerUser />
+
     </>
   );
 };

@@ -29,7 +29,7 @@ const OpenAITokensWeUsed = () => {
       <Typography variant="h6">Number of OpenAI Tokens Used: {tokensUsed || "N/A"}</Typography>
       <Card>
         <CardContent>
-          {/* Additional content for the card */}
+          {/* Should be added lately in the UI work */}
         </CardContent>
       </Card>
     </div>
