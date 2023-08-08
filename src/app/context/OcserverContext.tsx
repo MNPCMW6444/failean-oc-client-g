@@ -1,10 +1,7 @@
 import { ReactNode, createContext, useEffect, useState, useRef } from "react";
 import { Typography } from "@mui/material";
-import axios, { AxiosInstance } from "axios";
-
-import { ServiceDiscovery } from "@aws-sdk/client-servicediscovery";
-import dotenv from "dotenv";
-dotenv.config();
+import { AxiosInstance } from "axios";
+import { ocserverAxiosInstanceGetter } from "@failean/oc-server-provider";
 
 interface OcserverProviderProps {
   children: ReactNode;
@@ -50,6 +47,10 @@ export const OcserverProvider = ({
   const statusRef = useRef(status);
 
   let axiosInstance: any = false;
+
+  ocserverAxiosInstanceGetter().then((instance) => {
+    axiosInstance = instance;
+  });
 
   useEffect(() => {
     statusRef.current = status;
