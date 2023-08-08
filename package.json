@@ -59,6 +59,7 @@
     ]
   },
   "devDependencies": {
-    "@types/axios": "^0.14.0"
+    "@types/axios": "^0.14.0",
+    "concurrently": "^8.2.0"
   }
 }
