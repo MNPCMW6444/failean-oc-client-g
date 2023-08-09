@@ -1,8 +1,29 @@
 const express = require("express");
 const path = require("path");
 const app = express();
+const basicAuth = require('basic-auth');
 
-// Production environment: serve the build
+
+
+
+const USERNAME = "mnpcmw";
+const PASSWORD = "faileanizem8000";
+
+
+app.use((req, res, next) => {
+    const credentials = basicAuth(req);
+
+    if (credentials && credentials.name === USERNAME && credentials.pass === PASSWORD) {
+        return next();
+    }
+
+    res.setHeader('WWW-Authenticate', 'Basic realm="example"');
+    res.status(401).send('Authentication required');
+});
+
+
+
+
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'build')));
   
