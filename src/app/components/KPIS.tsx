@@ -3,7 +3,7 @@ import Signins from "./kpis/Signins";
 
 const KPIS = () => {
   return (
-    <OcserverProvider env="tst">
+    <OcserverProvider>
       <Signins />
     </OcserverProvider>
   );

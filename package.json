@@ -5,7 +5,7 @@
   "proxy": "http://localhost:5998",
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@failean/mainserver-provider": "^2.7.121",
+    "@failean/mainserver-provider": "^2.7.122",
     "@failean/oc-server-provider": "^2.0.8",
     "@failean/shared-types": "^2.9.159",
     "@mui/icons-material": "^5.14.3",

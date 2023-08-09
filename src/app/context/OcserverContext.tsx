@@ -31,16 +31,6 @@ export const OcserverProvider = ({
     interval / 1000
   } seconds.`;
 
-  const checkServerAvailability = async (axiosInstance: AxiosInstance) => {
-    try {
-      return (await axiosInstance.get("areyoualive")).data.answer === "yes"
-        ? GOOD_STATUS
-        : BAD_MESSAGE;
-    } catch (err) {
-      return BAD_MESSAGE;
-    }
-  };
-
   const [status, setStatus] = useState<string>(IDLE);
   const [version, setVersion] = useState<string>();
 
@@ -57,6 +47,16 @@ export const OcserverProvider = ({
   }, [status]);
 
   useEffect(() => {
+    const checkServerAvailability = async (axiosInstance: AxiosInstance) => {
+      try {
+        return (await axiosInstance.get("areyoualive")).data.answer === "yes"
+          ? GOOD_STATUS
+          : BAD_MESSAGE;
+      } catch (err) {
+        return BAD_MESSAGE;
+      }
+    };
+
     const setStatusAsyncly = async () => {
       try {
         setStatus(CHECKING_MESSAGE);
@@ -84,7 +84,7 @@ export const OcserverProvider = ({
     if (statusRef.current === IDLE) {
       axiosInstance && setStatusAsyncly();
     }
-  }, [axiosInstance, tryInterval]);
+  }, [axiosInstance, tryInterval, interval, BAD_MESSAGE]);
 
   if (status === GOOD_STATUS) {
     return (
@@ -95,6 +95,6 @@ export const OcserverProvider = ({
       </OcserverContext.Provider>
     );
   } else {
-    return customErrorTSX || <Typography>{status}</Typography>;
+    return <>customErrorTSX</> || <Typography>{status}</Typography>;
   }
 };
