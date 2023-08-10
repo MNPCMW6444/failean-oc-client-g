@@ -4,17 +4,19 @@ import InvalidPromptEvents from "./components/kpis/InvalidPromptEvents";
 import AvgPriceForPrompt from "./components/kpis/AvgPriceForPrompt";
 import OpenAITokensWeUsed from "./components/kpis/OpenAITokensWeUsed";
 import AvgIdeasPerUser from "./components/kpis/AvgIdeasPerUser";
+import { OcserverProvider } from "./context/OcserverContext";
 
 const App = () => {
   return (
     <>
       <Servers />
-      <Signins />
-    <InvalidPromptEvents  />
-    <AvgPriceForPrompt />
-    <OpenAITokensWeUsed />
-    <AvgIdeasPerUser />
-
+      <OcserverProvider>
+        <Signins />
+      </OcserverProvider>
+      <InvalidPromptEvents />
+      <AvgPriceForPrompt />
+      <OpenAITokensWeUsed />
+      <AvgIdeasPerUser />
     </>
   );
 };
