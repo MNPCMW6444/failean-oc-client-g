@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const app = express();
 const basicAuth = require('basic-auth');
-
+require('dotenv').config();
 
 
 
@@ -31,10 +31,9 @@ if (process.env.NODE_ENV === 'production') {
       res.sendFile(path.join(__dirname, 'build', 'index.html'));
   });
 } 
-// Development environment: forward the requests to localhost:5992
 else if (process.env.NODE_ENV === 'development') {
     const { createProxyMiddleware } = require('http-proxy-middleware');
-
+console.log("devproxy")
   app.use(createProxyMiddleware({
     target: 'http://localhost:5997',
     changeOrigin: true
