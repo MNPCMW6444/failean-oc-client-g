@@ -1,12 +1,17 @@
 import { useState, useEffect, useContext } from "react";
 import { Grid, Box } from "@mui/material";
 import { MainserverContext } from "@failean/mainserver-provider";
+import {OcserverContext} from "../../../context/OcserverContext";
 
-const MainserverStatus = () => {
+
+interface ServerStatusProps {
+  server:string
+}
+const ServerStatus = ({server}:ServerStatusProps) => {
   const [status, setStatus] = useState("pending");
 
-  const mainserverContext = useContext(MainserverContext);
-  const axiosInstance = mainserverContext?.axiosInstance;
+  const serverContext = useContext(server==="main" ?MainserverContext:OcserverContext);
+  const axiosInstance = serverContext?.axiosInstance;
 
   useEffect(() => {
     const check = async () => {
@@ -41,11 +46,11 @@ const MainserverStatus = () => {
           borderRadius="20px"
           color="black"
         >
-          Server status is {status}
+          {server} Server status is {status}
         </Box>
       </Grid>
     </Grid>
   );
 };
 
-export default MainserverStatus;
+export default ServerStatus;

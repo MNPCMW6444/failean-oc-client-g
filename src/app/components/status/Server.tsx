@@ -1,9 +1,15 @@
 import { MainserverProvider } from "@failean/mainserver-provider";
-import MainserverStatus from "./servers/MainserverStatus";
+import ServerStatus from "./servers/ServerStatus";
+import {OcserverProvider} from "../../context/OcserverContext";
 
 const Servers = () => (
-  <MainserverProvider env="dev">
-    <MainserverStatus />
-  </MainserverProvider>
+    <>
+        <MainserverProvider >
+            <ServerStatus server="main" />
+        </MainserverProvider>
+        <OcserverProvider>
+            <ServerStatus server="oc" />
+        </OcserverProvider>
+    </>
 );
 export default Servers;

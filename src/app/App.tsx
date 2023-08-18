@@ -11,12 +11,12 @@ const App = () => {
     <>
       <Servers />
       <OcserverProvider>
-        <Signins />
+          <Signins />
+          <InvalidPromptEvents />
+          <AvgPriceForPrompt />
+          <OpenAITokensWeUsed />
+          <AvgIdeasPerUser />
       </OcserverProvider>
-      <InvalidPromptEvents />
-      <AvgPriceForPrompt />
-      <OpenAITokensWeUsed />
-      <AvgIdeasPerUser />
     </>
   );
 };

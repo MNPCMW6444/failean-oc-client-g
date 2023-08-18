@@ -13,6 +13,8 @@ const Signins = () => {
   useEffect(() => {
     const fetchSignins = async () => {
       try {
+        debugger;
+
         if (axiosInstance) {
           const res = await axiosInstance("read/usersWhoLoggedInLastDay");
           const { total, details } = res.data;
