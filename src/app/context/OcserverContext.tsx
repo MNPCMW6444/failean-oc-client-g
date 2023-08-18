@@ -57,7 +57,7 @@ export const OcserverProvider = ({
     });
 
     const baseURL = `http://${ip}:6777/`;
-
+  debugger;
     return axios.create({
       baseURL,
       withCredentials: true,
@@ -78,7 +78,10 @@ export const OcserverProvider = ({
   let axiosInstance: any = false;
 
   ocserverAxiosInstanceGetter().then((instance) => {
+    debugger;
     axiosInstance = instance;
+  }).catch((e)=> {
+    debugger;
   });
 
   useEffect(() => {

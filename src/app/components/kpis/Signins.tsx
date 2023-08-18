@@ -7,17 +7,18 @@ const Signins = () => {
   const [details, setDetails] = useState([] as any);
 
   const ocserverContext = useContext(OcserverContext);
+  debugger;
   const axiosInstance = ocserverContext?.axiosInstance;
   
 
   useEffect(() => {
     const fetchSignins = async () => {
       try {
-        debugger;
-
+debugger;
         if (axiosInstance) {
           const res = await axiosInstance("read/usersWhoLoggedInLastDay");
           const { total, details } = res.data;
+          debugger;
           setNumberInLast24H(total);
           setDetails(details);
         }
