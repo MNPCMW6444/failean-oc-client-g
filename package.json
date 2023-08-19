@@ -4,10 +4,8 @@
   "private": true,
   "proxy": "http://localhost:5998",
   "dependencies": {
-    "@aws-sdk/client-servicediscovery": "^3.395.0",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@failean/mainserver-provider": "^2.7.122",
-    "@failean/oc-server-provider": "^3.0.10",
     "@failean/shared-types": "^2.9.159",
     "@mui/icons-material": "^5.14.3",
     "@testing-library/jest-dom": "^6.0.1",

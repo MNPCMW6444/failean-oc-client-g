@@ -41,10 +41,10 @@ debugger;
               </TableRow>
             </TableHead>
             <TableBody>
-              {details.map((item: { id: String; user:string; date:string }) => (
-                <TableRow key={item.id.toString()}>
-                  <TableCell>{item.user?.toString()}</TableCell>
-                  <TableCell>{item.date?.toString()}</TableCell>
+              {details.map((item: { id: String; user:string; date:string }, i:number) => (
+                <TableRow key={i}>
+                  <TableCell>{item.user}</TableCell>
+                  <TableCell>{item.date}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

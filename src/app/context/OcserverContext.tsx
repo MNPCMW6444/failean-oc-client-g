@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useEffect, useState, useRef } from "react";
 import { Typography } from "@mui/material";
 import axios,{ AxiosInstance } from "axios";
-import { ServiceDiscovery } from "@aws-sdk/client-servicediscovery";
+
 
 interface OcserverProviderProps {
   children: ReactNode;
@@ -31,59 +31,22 @@ export const OcserverProvider = ({
     interval / 1000
   } seconds.`;
 
-  const discoverService = async (
-      region: string,
-      params: any
-  ): Promise<string> => {
-    if (process.env.NODE_ENV === "development") return "127.0.0.1";
-    const serviceDiscovery = new ServiceDiscovery({ region });
-    try {
-      const data = await serviceDiscovery.discoverInstances(params);
-      return (
-          (data.Instances && data.Instances[0].Attributes?.AWS_INSTANCE_IPV4) + ""
-      );
-    } catch (err: any) {
-      console.error("Error during service discovery:", err.message);
-      throw err; // Rethrow the error to be handled by the caller
-    }
-  };
-
-  const  ocserverAxiosInstanceGetter = async()=> {
-
-    const ip = await discoverService("us-east-1", {
-      NamespaceName: "tst",
-      ServiceName: "ocserver",
-      MaxResults: 10,
-    });
-
-    const baseURL = `http://${ip}:6777/`;
-  debugger;
-    return axios.create({
-      baseURL,
-      withCredentials: true,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      auth: {
-        username: "client",
-        password: process.env.OCPASS + "xx",
-      },
-    });
-  }
   const [status, setStatus] = useState<string>(IDLE);
   const [version, setVersion] = useState<string>();
 
   const statusRef = useRef(status);
 
-  let axiosInstance: any = false;
-
-  ocserverAxiosInstanceGetter().then((instance) => {
-    debugger;
-    axiosInstance = instance;
-  }).catch((e)=> {
-    debugger;
+  const axiosInstance= axios.create({
+    baseURL:process.env.NODE_ENV==="development" ? "http://localhost:6777/" : "https://ocserver.failean.com/",
+    withCredentials: true,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    auth: {
+      username: "client",
+      password: process.env.OCPASS + "xx",
+    },
   });
-
   useEffect(() => {
     statusRef.current = status;
   }, [status]);
@@ -124,7 +87,7 @@ export const OcserverProvider = ({
       }
     };
     if (statusRef.current === IDLE) {
-      axiosInstance && setStatusAsyncly();
+      setStatusAsyncly();
     }
   }, [axiosInstance, tryInterval, interval, BAD_MESSAGE]);
 
