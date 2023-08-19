@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useEffect, useState, useRef } from "react";
 import { Typography } from "@mui/material";
-import axios,{ AxiosInstance } from "axios";
-
+import { AxiosInstance } from "axios";
+import {axiosInstance } from "@failean/oc-server-axiosinstance"
 
 interface OcserverProviderProps {
   children: ReactNode;
@@ -36,17 +36,8 @@ export const OcserverProvider = ({
 
   const statusRef = useRef(status);
 
-  const axiosInstance= axios.create({
-    baseURL:process.env.NODE_ENV==="development" ? "http://localhost:6777/" : "https://ocserver.failean.com/",
-    withCredentials: true,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    auth: {
-      username: "client",
-      password: process.env.OCPASS + "xx",
-    },
-  });
+
+
   useEffect(() => {
     statusRef.current = status;
   }, [status]);
@@ -89,7 +80,7 @@ export const OcserverProvider = ({
     if (statusRef.current === IDLE) {
       setStatusAsyncly();
     }
-  }, [axiosInstance, tryInterval, interval, BAD_MESSAGE]);
+  }, [ tryInterval, interval, BAD_MESSAGE]);
 
   if (status === GOOD_STATUS) {
     return (
