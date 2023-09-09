@@ -1,5 +1,6 @@
 FROM node:lts as BUILDER
 WORKDIR /app
+ARG NPMTOKEN
 COPY package.json /app/package.json
 COPY tsconfig.json /app/tsconfig.json
 COPY public /app/public
