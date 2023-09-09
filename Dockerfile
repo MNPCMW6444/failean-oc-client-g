@@ -4,6 +4,7 @@ COPY package.json /app/package.json
 COPY tsconfig.json /app/tsconfig.json
 COPY public /app/public
 COPY src /app/src
+COPY .npmrc /app/.npmrc
 COPY server.js /app/server.js
 RUN npm run prod
 RUN npm run clean:prod
