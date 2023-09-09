@@ -9,7 +9,8 @@ RUN npm run prod
 RUN npm run clean:prod
 RUN npm i --omit=dev
 RUN rm -rf .npmrc
-FROM lts-slim
+
+FROM node:lts-slim
 WORKDIR /app
 COPY package.json /app/package.json
 COPY --from=builder /app/package-lock.json /app/package-lock.json
