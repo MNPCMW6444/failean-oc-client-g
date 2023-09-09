@@ -4,8 +4,9 @@
   "private": true,
   "proxy": "http://localhost:5998",
   "dependencies": {
-    "express": "^4.18.2",
-    "basic-auth": "^2.0.1"
+    "basic-auth": "^2.0.1",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
   },
   "scripts": {
     "v..": "npm version patch --no-git-tag-version",
