@@ -1,19 +1,41 @@
 import {BarChart} from '@mui/x-charts/BarChart';
+import {useState, useEffect} from "react";
+import axios from "axios"
 
 
 const App = () => {
+
+    const [a, sa] = useState(0);
+    const [b, sb] = useState(0);
+    const [c, sc] = useState(0);
+
+    useEffect(() => {
+        const fr = async () => {
+            try {
+                const res = await axios.get("https://mainserver.failean.com/abtestg");
+                sa(res.data.a)
+                sb(res.data.b)
+                sc(res.data.c)
+            } catch (e) {
+                console.log(e)
+            }
+        }
+        fr();
+    }, []);
+
+
     return (
         <BarChart
             xAxis={[
                 {
-                    id: 'barCategories',
-                    data: ['bar A', 'bar B', 'bar C'],
+                    id: 'abtest',
+                    data: ['failean.com', 'scailean.com', "other"],
                     scaleType: 'band',
                 },
             ]}
             series={[
                 {
-                    data: [2, 5, 3],
+                    data: [a, b, c],
                 },
             ]}
             width={500}
