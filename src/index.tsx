@@ -1,14 +1,14 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
-import ABTEST from "./app/ABTEST";
+import App from "./app/App";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <StrictMode>
-    <ABTEST />
+    <App />
   </StrictMode>
 );
 
