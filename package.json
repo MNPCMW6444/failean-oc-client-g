@@ -48,7 +48,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@failean/mainserver-provider": "^2.7.126",
-    "@failean/oc-server-axiosinstance": "^5.5.66",
+    "@failean/oc-server-axiosinstance": "^5.5.67",
     "@failean/shared-types": "^2.9.174",
     "@mui/icons-material": "^5.14.9",
     "@mui/x-charts": "^6.0.0-alpha.11",
