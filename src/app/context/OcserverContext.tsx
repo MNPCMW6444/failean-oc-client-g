@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useEffect, useState, useRef } from "react";
 import { Typography } from "@mui/material";
 import { AxiosInstance } from "axios";
-import {axiosInstance } from "@failean/oc-server-axiosinstance"
+import { axiosInstance } from "@failean/oc-server-axiosinstance"
 
 interface OcserverProviderProps {
   children: ReactNode;
