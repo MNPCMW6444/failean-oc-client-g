@@ -23,7 +23,7 @@ const InvalidPromptEvents = () =>{
 
 return(
   <div>
- {invalidPromptEvents}
+ {JSON.stringify(invalidPromptEvents)}
 </div>
 
 );
